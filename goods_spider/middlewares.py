@@ -130,7 +130,7 @@ class MyproxisSpiderMidleware(object):
 
     def process_request(self, request, spider):
         # proxy = self.get_proxy1()
-        proxy = '10.10.0.114:808'
+        proxy = '10.10.0.113:808'
         print('this is ip:' + proxy)
         request.meta['proxy'] = 'https://' + proxy
 
@@ -138,7 +138,7 @@ class MyproxisSpiderMidleware(object):
         '''对返回的response处理'''
         # 如果返回的response状态不是200，重新生成当前request对象
         if response.status != 200:
-            proxy = '10.10.0.114:808'
+            proxy = '10.10.0.113:808'
             print("this is response ip:" + proxy)
             # 对当前reque加上代理
             request.meta['proxy'] = proxy

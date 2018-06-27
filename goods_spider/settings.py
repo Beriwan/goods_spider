@@ -74,7 +74,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'goods_spider.pipelines.ShopSpiderPipeline': 300,
-    # 'scrapy_redis.pipelines.RedisPipeline': 301
+     'scrapy_redis.pipelines.RedisPipeline': 301
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

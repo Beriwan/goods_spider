@@ -17,6 +17,7 @@ class SkuinfoItem(scrapy.Item):
     account = scrapy.Field()
     itemprice = scrapy.Field()
     quantity = scrapy.Field()
+    content = scrapy.Field()
 
     pass
 

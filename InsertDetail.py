@@ -71,7 +71,7 @@ class DetailInsert(object):
         items = R.r.llen('detail:items')
         print(items)
         for i in range(0, items):
-            item = R.r.blpop('detail:items')
+            item = R.r.blpop('detail:items',timeout=5)
             contents = json.loads(item[1])
             list_detail.append(self.get_detail(contents))
             changeinfo = self.get_change(contents)
@@ -106,5 +106,5 @@ def main():
 if __name__ == '__main__':
     while True:
         main()
-        print('暂停60')
-        time.sleep(60)
+        print('3')
+        time.sleep(3)

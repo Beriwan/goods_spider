@@ -20,7 +20,12 @@ class RedisClient(object):
         except Exception as e:
             print(e)
 
-
+    def set_two_url(self,id,id2, url):
+        try:
+            self.r.lpush(self.name, url.format(id=id,id2=id2))
+            print('插入成功:%s and %s' %(id ,id2))
+        except Exception as e:
+            print(e)
 
 
 class Mysql(object):
@@ -60,7 +65,7 @@ class Mysql(object):
         cursor.close()
         self.close_db()
 
-    def get_shoplist(self,table = 'source_taobao_goods_detail_0614'):
+    def get_shoplist(self,table = 'source_taobao_goods_detail_0622'):
         sql = 'SELECT itemId FROM `{table}` GROUP BY shopId'.format(table=table)
         cursor = self.db.cursor()
         cursor.execute(sql)
@@ -70,6 +75,13 @@ class Mysql(object):
         # print(data)
         cursor.close()
         self.close_db()
+
+    def get_two(self,sql):
+        cursor = self.db.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        for item in data:
+            yield item
 
 
     def insert_one(self, sql):

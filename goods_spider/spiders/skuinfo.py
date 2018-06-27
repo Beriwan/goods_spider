@@ -23,8 +23,8 @@ class SkuinfoSpider(RedisSpider):
     # }
 
     custom_settings = {
-        'CONCURRENT_REQUESTS': 3000,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 100000,
+        'CONCURRENT_REQUESTS': 300,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
         # 'LOG_LEVEL' : 'INFO'
         # 'ITEM_PIPELINES': {'goods_spider.pipelines.SkuSpiderPipeline': 300, },
         # 'ITEM_PIPELINES': {'goods_spider.pipelines.ShopSpiderPipeline': 300, },
@@ -75,17 +75,25 @@ class SkuinfoSpider(RedisSpider):
 
     def parse(self, response):
         item = SkuinfoItem()
-        item['account'] = re.search('id=(\d+)', response.url).group(1)
-        item['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        item['itemId'] = re.search('itemId=(\d+)&', response.url).group(1)
+        account = re.search('id=(\d+)', response.url).group(1)
+        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        itemId = re.search('itemId=(\d+)&', response.url).group(1)
+        # item['account'] = re.search('id=(\d+)', response.url).group(1)
+        # item['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # item['itemId'] = re.search('itemId=(\d+)&', response.url).group(1)
         try:
             data = json.loads(response.text)['data']
         except Exception:
             print('无信息')
             return
-        item['quantity'] = data['dynStock']['sellableQuantity']
+        quantity = data['dynStock']['sellableQuantity']
+        # item['quantity'] = data['dynStock']['sellableQuantity']
         try:
-            item['itemprice'] = data['promotion']['promoData']['def'][0]['price']
+            price = data['promotion']['promoData']['def'][0]['price']
+            # item['itemprice'] = data['promotion']['promoData']['def'][0]['price']
         except Exception:
-            item['itemprice'] = data['price']
+            price = data['price']
+            # item['itemprice'] = data['price']
+        changes_set = [account, itemId, price, quantity, time]
+        item['content'] = changes_set
         yield item

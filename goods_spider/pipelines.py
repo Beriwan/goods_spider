@@ -15,7 +15,7 @@ class ShopSpiderPipeline(object):
             mysql = Mysql()
             print(item['shopinfo'])
             list.append(item['shopinfo'])
-            sql_detail = "replace into source_taobao_goods_shopinfo_0615(userId,shopId,shopName,shopIcon,fans,sellerType,shopType,shopage,goodRatePercentage,sellerNick,creditLevel,describe1,service,logistics,deposittime,maintype)values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql_detail = "replace into source_taobao_goods_shopinfo_0625(userId,shopId,shopName,shopIcon,fans,sellerType,shopType,shopage,goodRatePercentage,sellerNick,creditLevel,describe1,service,logistics,deposittime,maintype)values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             mysql.insert_sql(sql_detail, list)
             mysql.close_db()
             return item
