@@ -22,6 +22,11 @@ class DetailSpider(RedisSpider):
     # allowed_domains = ['www.taobao.com']
     # start_urls = ['https://item.taobao.com/item.htm?id=571513815951']
 
+    custom_settings = {
+        'REDIS_HOST': '10.10.0.109',
+        # 'DOWNLOADER_MIDDLEWARES': {'goods_spider.middlewares.MyproxisSpiderMidleware': 125, },
+    }
+
 
     def __init__(self, *args, **kwargs):
         # Dynamically define the allowed domains list.

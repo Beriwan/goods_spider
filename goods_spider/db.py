@@ -57,7 +57,7 @@ class Mysql(object):
         sql = 'select itemId from source_taobao_live_itemId where source_taobao_live_itemId.itemId not in (select itemId from source_taobao_live_itemId_drop)'
         sql1 = 'select * from `{table_name}`'.format(table_name=self.table_name)
         cursor = self.db.cursor()
-        cursor.execute(sql1)
+        cursor.execute(sql)
         data = cursor.fetchall()
         for item in data:
             yield item[0]
@@ -82,6 +82,14 @@ class Mysql(object):
         data = cursor.fetchall()
         for item in data:
             yield item
+
+    def create_table(self, sql):
+        try:
+            self.cursor.execute(sql)
+            print('创建成功')
+            self.close_db()
+        except Exception as e:
+            print('error: %s' %e)
 
 
     def insert_one(self, sql):
