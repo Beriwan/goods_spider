@@ -109,12 +109,12 @@ class DetailInsert(object):
                 for sku in sku_list:
                     list_skuinfo.append(tuple(sku))
             # list_shopinfo.append(get_shop(contents))
-        sql_detail = "replace into source_taobao_goods_detail_0622(itemId,shopId,sellerId,title,headimg,itemprice,tb_state,rootCategoryId,categoryId,deposittime,shopType)values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql_detail = "replace into source_taobao_goods_detail(itemId,shopId,sellerId,title,headimg,itemprice,tb_state,rootCategoryId,categoryId,deposittime,shopType)values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         mysql.insert_sql(sql_detail, list_detail)
         # sql_prop = "replace into source_taobao_goods_prop_0621(itemId,pid,pidname,vid,vidname,deposittime)values(%s,%s,%s,%s,%s,%s)"
         # mysql.insert_sql(sql_prop, list_prop)
-        sql_change = "insert into source_taobao_goods_change_0614(itemId,itemprice,quantity,deposittime)values(%s,%s,%s,%s)"
-        mysql.insert_sql(sql_change, list_changes)
+        # sql_change = "insert into source_taobao_goods_change_0614(itemId,itemprice,quantity,deposittime)values(%s,%s,%s,%s)"
+        # mysql.insert_sql(sql_change, list_changes)
         # sql_sku = "insert into source_taobao_goods_skuinfo(itemId,skuId,quantity,price,propPath,updatetime)values(%s,%s,%s,%s,%s,%s)"
         # mysql.insert_sql(sql_sku, list_skuinfo)
         mysql.close_db()
@@ -128,7 +128,7 @@ def main(run):
 
 if __name__ == '__main__':
     run = DetailInsert()
-    run.create_table(sql)
+    # run.create_table(sql)
     while True:
         main(run)
         print('暂停60')

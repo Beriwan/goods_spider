@@ -25,6 +25,8 @@ class SkuinfoSpider(RedisSpider):
     custom_settings = {
         'CONCURRENT_REQUESTS': 300,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 100,
+        'REDIS_HOST': '10.10.0.109',
+        # 'EXTENSIONS': {'goods_spider.extensions.RedisSpiderSmartIdleClosedExensions': 500, },
         # 'LOG_LEVEL' : 'INFO'
         # 'ITEM_PIPELINES': {'goods_spider.pipelines.SkuSpiderPipeline': 300, },
         # 'ITEM_PIPELINES': {'goods_spider.pipelines.ShopSpiderPipeline': 300, },

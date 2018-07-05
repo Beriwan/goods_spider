@@ -98,8 +98,8 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-REDIS_HOST = '192.168.0.107'
-# REDIS_HOST = '10.10.0.109'     # 主机名
+# REDIS_HOST = '192.168.0.107'
+REDIS_HOST = '10.10.0.109'     # 主机名
 REDIS_PORT = 6379
 REDIS_PASSWORD = None
 

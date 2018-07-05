@@ -12,6 +12,7 @@ import scrapy
 from pyquery import PyQuery as pq
 from scrapy_redis.spiders import RedisSpider
 
+from goods_spider.db import Mysql
 from goods_spider.items import TbGoodsItem
 from goods_spider.settings import *
 
@@ -98,13 +99,12 @@ class DetailSpider(RedisSpider):
                 skus = json.loads(skus)
             except Exception:
                 skus = None
-            data = json.loads(r1.text)['data']
         if type == 'B':
             try:
                 skus = response['valItemInfo']['skuMap']
             except Exception:
                 skus = None
-            data = json.loads(r1.text)['data']
+        data = json.loads(r1.text)['data']
         self.parse_sku(skus, item, data)
 
     def parse_sku(self, skus, item, data):
@@ -204,8 +204,11 @@ class DetailSpider(RedisSpider):
                     yield item
             elif doc('.error-notice-hd'):
                 print('商品下架不存在')
-                with open('xiajia_0612.txt', 'a+') as f:
-                    f.write(response.url + '\n')
+                id = re.search('&itemid=(\d+)&', response.url).group(1)
+                sql = 'replace into `source_taobao_live_itemId_drop` (itemId) values ({id})'.format(id=id)
+                mysql = Mysql()
+                mysql.insert_one(sql)
+                mysql.close_db()
             else:
                 self.taobao_detail(response, item)
                 # self.get_shop(response, item)

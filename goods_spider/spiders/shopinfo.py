@@ -86,7 +86,7 @@ class ShopinfoSpider(RedisSpider):
             print('商品过期不存在')
             print(item['itemId'])
             time.sleep(1)
-            yield item
+            # yield item
         else:
             item['itemId'] = re_id.search(response.url).group(1)
             data = content['data']

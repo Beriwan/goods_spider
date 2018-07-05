@@ -9,7 +9,7 @@ class Skulist(object):
 
     def set_list(self):
         url = 'https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId={id}&modules=dynStock,price,xmpPromotion,originalPrice&accountid={id2}'
-        sql = 'SELECT itemId,accountId FROM `source_taobao_live_product_now`'
+        sql = 'SELECT itemId,accountId FROM `source_taobao_live_product_now` WHERE ishot = \'false\''
         mysql = Mysql()
         R = RedisClient(SKU_NAME)
         items = mysql.get_two(sql)

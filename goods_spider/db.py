@@ -55,9 +55,10 @@ class Mysql(object):
 
     def get_itemId(self):
         sql = 'select itemId from source_taobao_live_itemId where source_taobao_live_itemId.itemId not in (select itemId from source_taobao_live_itemId_drop)'
+        sql2 = 'SELECT a.itemId FROM (SELECT itemId FROM source_taobao_live_itemId WHERE source_taobao_live_itemId.itemId not in (SELECT itemId FROM source_taobao_live_itemId_drop)) as a WHERE a.itemId not in (SELECT itemId FROM source_taobao_goods_detail)'
         sql1 = 'select * from `{table_name}`'.format(table_name=self.table_name)
         cursor = self.db.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql2)
         data = cursor.fetchall()
         for item in data:
             yield item[0]
@@ -65,8 +66,8 @@ class Mysql(object):
         cursor.close()
         self.close_db()
 
-    def get_shoplist(self,table = 'source_taobao_goods_detail_0622'):
-        sql = 'SELECT itemId FROM `{table}` GROUP BY shopId'.format(table=table)
+    def get_shoplist(self):
+        sql = 'select a.itemId from (SELECT itemId,shopId FROM source_taobao_goods_detail WHERE tb_state != \'-2\' GROUP BY shopId) as a where a.shopId not in (SELECT shopId FROM source_taobao_goods_shopinfo )'
         cursor = self.db.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
@@ -94,8 +95,9 @@ class Mysql(object):
 
     def insert_one(self, sql):
         # try:
-        sql = sql
+        # sql = sql
         self.cursor.execute(sql)
+        print('插入成功')
         # print(end1-start)
         self.db.commit()
 
